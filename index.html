@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8" />
+
+ 	<title>Flickr Demo</title>
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700|Gentium+Book+Basic:400,400italic' rel='stylesheet' type='text/css' />
+
+	<script src="script.js" async></script> 
+
+	<!-- Flickr JSON API: Dokumentation siehe: http://www.flickr.com/services/api/ -->
+	<script type="text/javascript" src="http://api.flickr.com/services/rest/?format=json&amp;sort=random&amp;method=flickr.photos.search&amp;tags=berlin,csd&amp;tag_mode=all&amp;api_key=6202031574e5d7c896dd4711b2611cc5" id="flickr" async></script>
+
+</head>
+
+<body>	
+	<div id="container">
+		<h1>Photos From Flickr: <span id="keywords" class="animate">csd, berlin</span></h1>
+		<aside>
+			<form id="search" method="post">
+				<label for="tags">Suche:</label>
+				<input type="text" placeholder="csd, berlin" id="tags" name="tags" />
+				<input type="submit" id="submit" name="submit"value="go!" />
+			</form>
+		</aside>
+		<ul id="photos">
+		</ul>
+	</div>
+</body>
+
+</html>
