@@ -7,26 +7,22 @@
 html {
 	padding: 0;
 	margin: 0;
-
-	min-height: 100%;
-	width: 100%;
 }
 
 body {
 	margin: 0;
 	padding: 48px;
 	
-	min-height: 100%;
+	height: 100%;
 	width: 100%;
 
 	background: #444444; /* Old browsers */
-	background: -moz-radial-gradient(top center, circle closest-corner, #555, #3d3d3d); /* FF3.6+ */
+		background: -moz-radial-gradient(top center, circle closest-corner, #555, #3d3d3d); /* FF3.6+ */
 	background: -webkit-gradient(radial, top center, 0px, bottom center, 400px, color-stop(0,#555), color-stop(400px,#3d3d3d)); /* Chrome,Safari4+ */
 	background: -webkit-radial-gradient(top center, circle closest-corner, #555, #3d3d3d); /* Chrome10+,Safari5.1+ */
 	background:  radial-gradient(top center, circle closest-corner, #555, #3d3d3d); /* Opera 12+ */
 	background: radial-gradient(top center, circle closest-corner, #555, #3d3d3d); /* W3C */
 	background-repeat: no-repeat;
-	background-position: top center;
 	font-family: 'Gentium Book Basic', Georgia, Times, serif;
 	color: #eee;
 }
@@ -37,10 +33,8 @@ body {
 
 aside {
 	position: absolute;
-	top: -32px;
+	top: 7px;
 	right: 0;
-
-	padding: 24px 0;
 
 	width: 260px;
 	height: 32px;
@@ -52,9 +46,6 @@ label {
 	margin-right: 24px;
 	padding-bottom: 3px;
 	border-bottom: 1px dotted #eee;
-	
-	position: relative;
-	top: -3px;
 }
 
 input {
@@ -107,7 +98,7 @@ h1 {
 	color: #eee;
 
 	margin: 12px 0;
-	padding: 0 0 12px;
+	padding: 0;
 
 	/*text-shadow: 0 -2px 0 rgba(0,0,0,.3), 0 1px 0 rgba(255,255,255,.2);*/
 	text-shadow: 0 3px 0 rgba(0,0,0,.3), 
@@ -203,9 +194,8 @@ h1 {
 	box-shadow: 0 3px 20px 8px rgba(0,0,0,.7);
 }
 
-.detail {
+#detail {
 	position: absolute;
-	box-shadow: 0 3px 10px rgba(0,0,0,.6);
 
 	top: -12px;
 	left: 50%;
@@ -222,15 +212,17 @@ h1 {
 	text-align: center;
 }
 
-.detail img {
+#detail img {
 	position: relative;
 	border: 12px solid rgba(0,0,0,.8) !important;
 
 	top: -12px;
 	left: -12px;
+	
+	opacity: .8;
 }
 
-.detail h2 {
+#detail h2 {
 	font-size: 21px;
 	line-height: 18px;
 	font-weight: normal;
@@ -241,10 +233,14 @@ h1 {
 	padding-top: 12px;
 }
 
-.detail h2::before {
+#detail h2::before {
 	content: '\201C';
 }
 
-.detail h2::after {
+#detail h2::after {
 	content: '\201D';
+}
+
+#detail p {
+	font-size: 14px;
 }

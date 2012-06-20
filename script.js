@@ -227,17 +227,5 @@ function jsonFlickrApi(response) {
 
 		if (e.preventDefault) e.preventDefault();
 		else e.returnValue = false;
-	}		
-
-	// get an element's absolute offset -- used for the detail overlay
-	function getOffset (elem) {
-		var offset = [elem.offsetLeft, elem.offsetTop]; // x position is index 0, y index 1
-		
-		/*do {
-			offset[0] += elem.offsetLeft - elem.scrollLeft;
-			offset[1] += elem.offsetTop - elem.scrollTop;
-		} while (elem = elem.offsetParent)*/
-
-		return offset;
 	}
 }
