@@ -194,7 +194,7 @@ h1 {
 	box-shadow: 0 3px 20px 8px rgba(0,0,0,.7);
 }
 
-#detail {
+.detail {
 	position: absolute;
 
 	top: -12px;
@@ -212,7 +212,7 @@ h1 {
 	text-align: center;
 }
 
-#detail img {
+.detail img {
 	position: relative;
 	border: 12px solid rgba(0,0,0,.8) !important;
 
@@ -222,7 +222,7 @@ h1 {
 	opacity: .8;
 }
 
-#detail h2 {
+.detail h2 {
 	font-size: 21px;
 	line-height: 18px;
 	font-weight: normal;
@@ -233,14 +233,14 @@ h1 {
 	padding-top: 12px;
 }
 
-#detail h2::before {
+.detail h2::before {
 	content: '\201C';
 }
 
-#detail h2::after {
+.detail h2::after {
 	content: '\201D';
 }
 
-#detail p {
+.detail p {
 	font-size: 14px;
 }
