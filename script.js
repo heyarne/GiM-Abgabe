@@ -15,7 +15,6 @@ function jsonFlickrApi(response) {
 		var photosList = d.getElementById('photos');
 		var a = d.createElement('a');
 
-		console.log(response.photos.photo);
 		for (var i = 0, l = response.photos.photo.length; i < l; i++) {
 			var photo = response.photos.photo[i];
 			var image = img.cloneNode();
@@ -97,9 +96,8 @@ function jsonFlickrApi(response) {
 	// image details
 	var showDetails = function(elem) {
 		var detailContainer = d.createElement('article');
-		detailContainer.id = 'detail';
 		detailContainer.style.opacity = 0;
-		detailContainer.className = 'animate fast';
+		detailContainer.className = 'detail animate fast';
 
 		var link = elem.cloneNode(true);
 		link.addEventListener('click', createOverlay)
@@ -132,22 +130,38 @@ function jsonFlickrApi(response) {
 		
 		// search function
 		var getNewPhotos = function (e) {
-			var value = d.getElementById('tags').value;
+			var keywords = d.getElementById('keywords'); // headline
+			var newKeywords = d.getElementById('tags').value
+
 			var script = d.createElement('script');
-			script.src = scriptURL(value);
+			script.src = scriptURL(newKeywords);
 			
 			d.head.appendChild(script);
 
 			d.body.style.cursor = 'wait';
+			
+			var j = 1; 
+			var addNew = function() {
+				var to = setTimeout(addNew, 75);
 
-			// change the keywords
-			var keywords = d.getElementById('keywords');
-			keywords.style.opacity = 0;
+				j++;
+				keywords.innerHTML = newKeywords.substr(0, j);
 
-			setTimeout(function() {
-				keywords.innerHTML = value;
-				keywords.style.opacity = 1;
-			}, 500);
+				if (j === newKeywords.length) clearTimeout(to);
+			}
+
+			var i = keywords.innerHTML.length;
+			var removeOld = function() {
+				var to = setTimeout(removeOld, 75);
+
+				i--;
+				keywords.innerHTML = keywords.innerHTML.substr(0, i);
+				if (i === 0) {
+					clearTimeout(to);
+					addNew();
+				}
+			}
+			removeOld();
 
 			stopEvent(e);
 			return false;
@@ -203,7 +217,7 @@ function jsonFlickrApi(response) {
 			tags = tags.substr(0, tags.length - 1);
 		}
 
-		return 'http://api.flickr.com/services/rest/?format=json&sort=random&method=flickr.photos.search&tags=' + tags + '&tag_mode=all&api_key=6202031574e5d7c896dd4711b2611cc5';
+		return 'http://api.flickr.com/services/rest/?format=json&sort=random&method=flickr.photos.search&tags=' + encodeURI(tags) + '&tag_mode=all&api_key=6202031574e5d7c896dd4711b2611cc5';
 	}
 
 	// Stop Events (taken from mootols)
