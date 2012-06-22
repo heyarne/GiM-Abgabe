@@ -26,11 +26,12 @@ function jsonFlickrApi(response) {
 
 			link.appendChild(image);
 			link.href = pictureLarge(photo);
-			link.target = '_blank';
 
-			link.addEventListener('click', createOverlay);
-			link.addEventListener('mouseover', function() {
+			link.setAttribute('flickrURL', linkURL(photo));
+			link.addEventListener('mouseover', function(e) {
 				showDetails(this);
+				stopEvent(e);
+				return false;
 			});
 
 			var output = li.cloneNode(); 
@@ -51,15 +52,21 @@ function jsonFlickrApi(response) {
 	}
 
 	// image overlay
-	var createOverlay = function(e) {
-		var src = e.currentTarget.href;
+	var createOverlay = function(elem) {
+		var src = elem.href;
 
 		var container = d.createElement('div');
+		var link = d.createElement('a');
 		var img = d.createElement('img');
 
 		container.id = 'overlay';
 		container.className = 'animate';
+
+		link.href = elem.getAttribute('flickrURL');
+		link.target = '_blank';
+		
 		img.src = src;
+		img.title = 'view flickr page';
 
 		container.style.cursor = 'wait';
 		container.style.opacity = 0;
@@ -70,18 +77,16 @@ function jsonFlickrApi(response) {
 			container.style.opacity = 1;
 		});
 
-		container.appendChild(img);
+		link.appendChild(img);
+		container.appendChild(link);
 		d.body.appendChild(container);
 
 		container.addEventListener('click', function(e) {
 			removeOverlay(e, container);
 			
-			// there is no default event so we don't need to stop it
+			// stopEvent(e);
 			return false;
 		});
-
-		stopEvent(e);
-		return false;
 	}
 
 	var removeOverlay = function(e, elem) {
@@ -100,7 +105,17 @@ function jsonFlickrApi(response) {
 		detailContainer.className = 'detail animate fast';
 
 		var link = elem.cloneNode(true);
-		link.addEventListener('click', createOverlay)
+		link.addEventListener('click', function(e) {
+			createOverlay(this);
+			stopEvent(e);
+			return false;
+		});
+
+		detailContainer.addEventListener('mouseout', function(e) {
+			hideDetails(this);
+			stopEvent(e);
+			return false;
+		});
 		detailContainer.appendChild(link);
 
 		var headline = d.createElement('h2');
@@ -110,9 +125,6 @@ function jsonFlickrApi(response) {
 
 		detailContainer.appendChild(headline);
 
-		detailContainer.addEventListener('mouseout', function() {
-			hideDetails(this);
-		});
 
 		elem.parentElement.appendChild(detailContainer);
 		detailContainer.style.opacity = 1;
