@@ -14,27 +14,34 @@ function jsonFlickrApi(response) {
 		var li = d.createElement('li');
 		var photosList = d.getElementById('photos');
 		var a = d.createElement('a');
+		
+		photosList.style.opacity = 1;
 
 		for (var i = 0, l = response.photos.photo.length; i < l; i++) {
 			var photo = response.photos.photo[i];
-			var image = img.cloneNode();
-			var link = a.cloneNode();
+			var image = img.cloneNode(false);
+			var link = a.cloneNode(false);
 
 			var url = pictureThumb(photo);
 			image.src = url;
 			image.alt = image.title = photo.title;
 
+			image.addEventListener('load', function() {
+					this.className = 'loaded'; // firefox 13 (ubuntu) doesn't animate, chromium does
+					this.removeEventListener('load'); // don't waste memory
+			});
+
 			link.appendChild(image);
 			link.href = pictureLarge(photo);
 
-			link.setAttribute('flickrURL', linkURL(photo));
+			link.setAttribute('data-flickrURL', linkURL(photo));
 			link.addEventListener('mouseover', function(e) {
 				showDetails(this);
 				stopEvent(e);
 				return false;
 			});
 
-			var output = li.cloneNode(); 
+			var output = li.cloneNode(false); 
 			output.appendChild(link);
 
 			photosList.appendChild(output);
@@ -45,10 +52,15 @@ function jsonFlickrApi(response) {
 	var removePhotos = function() {
 		var photosList = d.getElementById('photos');
 		var photos = photosList.children;
+		var parent = photosList.parentElement;
 
-		for (var i = photos.length; i--; ) {
-			photosList.removeChild(photos[i]);
-		}
+		photosList.style.opacity = 0;
+		var newList = photosList.cloneNode(false);
+
+		setTimeout(function() {
+			parent.removeChild(photosList);
+			parent.appendChild(newList);
+		}, 500);
 	}
 
 	// image overlay
@@ -62,7 +74,7 @@ function jsonFlickrApi(response) {
 		container.id = 'overlay';
 		container.className = 'animate';
 
-		link.href = elem.getAttribute('flickrURL');
+		link.href = elem.getAttribute('data-flickrURL');
 		link.target = '_blank';
 		
 		img.src = src;
@@ -73,7 +85,7 @@ function jsonFlickrApi(response) {
 
 		// make the container fade in once the image is loaded
 		img.addEventListener('load', function() {
-			container.style.cursor = 'pointer';
+			container.style.cursor = 'no-drop';
 			container.style.opacity = 1;
 		});
 
@@ -111,8 +123,8 @@ function jsonFlickrApi(response) {
 			return false;
 		});
 
-		detailContainer.addEventListener('mouseout', function(e) {
-			hideDetails(this);
+		link.addEventListener('mouseout', function(e) {
+			hideDetails(detailContainer);
 			stopEvent(e);
 			return false;
 		});
@@ -151,7 +163,8 @@ function jsonFlickrApi(response) {
 			d.head.appendChild(script);
 
 			d.body.style.cursor = 'wait';
-			
+		
+			// this is all for the headline
 			var j = 1; 
 			var addNew = function() {
 				var to = setTimeout(addNew, 75);
@@ -188,7 +201,7 @@ function jsonFlickrApi(response) {
 		d.body.style.cursor = 'auto';
 
 		removePhotos();
-		addPhotos();
+		setTimeout(addPhotos, 600);
 	}
 
 	// Utility-Functions: Generieren von Flickr-URLs
