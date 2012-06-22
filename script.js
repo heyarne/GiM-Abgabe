@@ -1,4 +1,5 @@
 // source code is best viewed with tab-size at 2 spaces
+var _flickrResponses = 0;
 
 function jsonFlickrApi(response) {
 	if (response.stat != "ok"){
@@ -149,7 +150,7 @@ function jsonFlickrApi(response) {
 		}, 200);
 	}
 
-	if (d.getElementById('photos').children.length === 0) {
+	if (_flickrResponses === 0) {
 		w.addEventListener('load', addPhotos);
 		
 		// search function
@@ -203,6 +204,8 @@ function jsonFlickrApi(response) {
 		removePhotos();
 		setTimeout(addPhotos, 600);
 	}
+	
+	_flickrResponses++;
 
 	// Utility-Functions: Generieren von Flickr-URLs
 	// Dokumentation siehe http://www.flickr.com/services/api/misc.urls.html
