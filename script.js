@@ -146,7 +146,9 @@ function jsonFlickrApi(response) {
 	var hideDetails = function(elem) {
 		elem.style.opacity = 0;
 		setTimeout(function() {
-			elem.parentElement && elem.parentElement.removeChild(elem);
+			if (elem.parentElement) { // sometimes parentElement is null, dunno why
+				elem.parentElement.removeChild(elem);
+			}
 		}, 200);
 	}
 

@@ -35,6 +35,8 @@ body {
 
 #container {
 	position: relative;
+	width: 990px;
+	margin: 0 auto;
 }
 
 aside {
@@ -137,7 +139,6 @@ h1 {
 #photos li {
 	margin: 0;
 	padding: 0;
-	line-height: 0;
 	display: inline-block;
  
 	position: relative; /* used for the details */
@@ -145,8 +146,8 @@ h1 {
 	text-align: center;
 	vertical-align: middle;
 
-	width: 18%;
-	margin: 32px 0.1%;
+	width: 174px;
+	margin: 12px;
 }
 
 #photos img {
@@ -265,4 +266,56 @@ h1 {
 
 .detail p {
 	font-size: 14px;
+}
+
+
+/*
+ * MEDIA QUERIES
+ */
+
+/* one list element = 198px */
+/* body padding: 48px; */
+
+
+@media only screen and (min-width: 888px) and (max-width: 1085px) {
+	/* 4 pictures */
+	#container,	#photos {
+		width: 792px;
+	}
+}
+
+@media only screen and (max-width: 888px) {
+	/* 2-3 pics */
+	h1 {
+		padding-right: 0;
+	}
+
+	aside {
+		position: relative;
+		top: 0;
+		margin-bottom: 32px;
+	}
+}
+
+@media only screen and (min-width: 690px) and (max-width: 888px) {
+	/* 3 pics */
+	#container, #photos {
+		width: 594px;
+	}
+}
+
+@media only screen and (max-width: 689px) {
+	/* 2 pics */
+	body {
+		padding: 32px 0;
+	}
+
+	#container, #photos {
+		width: 396px;
+	}
+
+	h1 {
+		font-size: 24px;
+		line-height: 32px;
+	}
 }
