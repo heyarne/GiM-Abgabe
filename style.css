@@ -148,6 +148,8 @@ h1 {
 
 	width: 174px;
 	margin: 12px;
+
+	font-size: 0; /* fixes margin-top/-bottom being greater */
 }
 
 #photos img {
