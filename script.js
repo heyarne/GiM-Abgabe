@@ -123,12 +123,10 @@ function jsonFlickrApi(response) {
 			stopEvent(e);
 			return false;
 		});
-
 		link.addEventListener('mouseout', function(e) {
 			hideDetails(detailContainer);
-			stopEvent(e);
-			return false;
 		});
+
 		detailContainer.appendChild(link);
 
 		var headline = d.createElement('h2');
@@ -136,8 +134,16 @@ function jsonFlickrApi(response) {
 
 		headline.innerHTML = title;
 
-		detailContainer.appendChild(headline);
+		// remove article elements that are still here
+		var articles = d.getElementsByTagName('article');
+		for (var i = articles.length; i--; ) {
+			// double check, maybe hideDetails has already removed it
+			if (articles[i] && articles[i].parentElement) {
+				articles[i].parentElement.removeChild(articles[i]);
+			}
+		}
 
+		detailContainer.appendChild(headline);
 
 		elem.parentElement.appendChild(detailContainer);
 		detailContainer.style.opacity = 1;
@@ -146,7 +152,7 @@ function jsonFlickrApi(response) {
 	var hideDetails = function(elem) {
 		elem.style.opacity = 0;
 		setTimeout(function() {
-			if (elem.parentElement) { // sometimes parentElement is null, dunno why
+			if (elem && elem.parentElement) {
 				elem.parentElement.removeChild(elem);
 			}
 		}, 200);
